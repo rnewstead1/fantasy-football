@@ -10,17 +10,17 @@ public class Player {
     private final String surname;
     private final String team;
     private final String position;
-    private final int lastSeasonPoints;
-    private final int price;
+    private final long lastSeasonPoints;
+    private final long cost;
     private final Double selectedBy;
 
-    public Player(String firstName, String surname, String team, String position, int lastSeasonPoints, int price, Double selectedBy) {
+    public Player(String firstName, String surname, String team, String position, long lastSeasonPoints, long cost, Double selectedBy) {
         this.firstName = firstName;
         this.surname = surname;
         this.team = team;
         this.position = position;
         this.lastSeasonPoints = lastSeasonPoints;
-        this.price = price;
+        this.cost = cost;
         this.selectedBy = selectedBy;
     }
 
@@ -40,12 +40,12 @@ public class Player {
         return position;
     }
 
-    public int lastSeasonPoints() {
+    public long lastSeasonPoints() {
         return lastSeasonPoints;
     }
 
-    public int price() {
-        return price;
+    public long cost() {
+        return cost;
     }
 
     public double selectedBy() {

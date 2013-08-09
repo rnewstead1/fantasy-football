@@ -1,5 +1,6 @@
 package com.powderach.fantasyteam;
 
+import com.google.common.base.Optional;
 import org.json.simple.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,9 +14,10 @@ public class JsonToPlayerFactoryTest {
     private String secondName;
     private String team;
     private String position;
-    private int lastSeasonPoints;
-    private int price;
+    private long lastSeasonPoints;
+    private long cost;
     private Double selectedBy;
+    private JsonToPlayerFactory jsonToPlayerFactory;
 
     @Before
     public void setUp() throws Exception {
@@ -24,31 +26,39 @@ public class JsonToPlayerFactoryTest {
         team = "West Brom";
         position = "Defender";
         lastSeasonPoints = 0;
-        price = 50;
+        cost = 50;
         selectedBy = 0.3;
+        jsonToPlayerFactory = new JsonToPlayerFactory();
     }
 
     @Test
     public void createsPlayerFromJsonObject() throws Exception {
-        Player player = new JsonToPlayerFactory().createFrom(createJsonObject());
+        Optional<Player> player = jsonToPlayerFactory.createFrom(createJsonObject());
 
-        Player expectedPlayer = new Player(firstName, secondName, team, position, lastSeasonPoints, price, selectedBy);
+        Player expectedPlayer = new Player(firstName, secondName, team, position, lastSeasonPoints, cost, selectedBy);
 
-        assertThat(player, is(expectedPlayer));
+        assertThat(player.get(), is(expectedPlayer));
+    }
+
+    @Test
+    public void createsAbsentPlayerFromAbsentJsonObject() throws Exception {
+        Optional<Player> player = jsonToPlayerFactory.createFrom(Optional.<JSONObject>absent());
+
+        assertThat(player.isPresent(), is(false));
     }
 
     @SuppressWarnings("unchecked")
-    private JSONObject createJsonObject() {
+    private Optional<JSONObject> createJsonObject() {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("first_name", firstName);
         jsonObject.put("second_name", secondName);
         jsonObject.put("team_name", team);
         jsonObject.put("type_name", position);
         jsonObject.put("last_season_points", lastSeasonPoints);
-        jsonObject.put("now_price", price);
+        jsonObject.put("now_cost", cost);
         jsonObject.put("selected_by", selectedBy);
 
-        return jsonObject;
+        return Optional.of(jsonObject);
     }
 
 }

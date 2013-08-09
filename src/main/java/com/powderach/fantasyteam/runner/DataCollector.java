@@ -1,5 +1,7 @@
 package com.powderach.fantasyteam.runner;
 
+import com.google.common.base.Function;
+import com.google.common.base.Optional;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
@@ -7,9 +9,8 @@ import com.mongodb.MongoClient;
 import com.powderach.fantasyteam.JsonReader;
 import com.powderach.fantasyteam.JsonToPlayerFactory;
 import com.powderach.fantasyteam.Player;
+import com.sun.istack.internal.Nullable;
 import org.json.simple.JSONObject;
-
-import java.net.UnknownHostException;
 
 import static java.lang.String.format;
 
@@ -20,14 +21,20 @@ public class DataCollector {
         JsonReader jsonReader = new JsonReader();
         JsonToPlayerFactory jsonToPlayerFactory = new JsonToPlayerFactory();
 
-        MongoClient mongo = mongoClient();
+        MongoClient mongo = new MongoClientConnector().mongoClient();
         DB db = mongo.getDB("playerdb");
-        DBCollection playerTable = db.getCollection("player");
+        final DBCollection playerTable = db.getCollection("player");
 
         for (int i = 1; i <= 532; i++) {
-            JSONObject jsonObject = jsonReader.readJsonFromUrl(format(REQUEST_URL, i));
-            Player player = jsonToPlayerFactory.createFrom(jsonObject);
-            write(player, playerTable);
+            Optional<JSONObject> jsonObject = jsonReader.readJsonFromUrl(format(REQUEST_URL, i));
+            Optional<Player> player = jsonToPlayerFactory.createFrom(jsonObject);
+            player.transform(new Function<Player, Boolean>() {
+                @Override
+                public Boolean apply(@Nullable com.powderach.fantasyteam.Player player) {
+                    write(player, playerTable);
+                    return true;
+                }
+            });
         }
     }
 
@@ -38,19 +45,10 @@ public class DataCollector {
         document.put("team", player.team());
         document.put("position", player.position());
         document.put("points_last_season", player.lastSeasonPoints());
-        document.put("price", player.price());
+        document.put("cost", player.cost());
         document.put("selected_by", player.selectedBy());
 
         playerTable.insert(document);
     }
 
-    private static MongoClient mongoClient() {
-        MongoClient mongo;
-        try {
-            mongo = new MongoClient();
-        } catch (UnknownHostException e) {
-            throw new RuntimeException("Something went wrong with Mongo Db", e);
-        }
-        return mongo;
-    }
 }

@@ -1,5 +1,6 @@
 package com.powderach.fantasyteam;
 
+import com.google.common.base.Optional;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
@@ -12,13 +13,14 @@ import java.nio.charset.Charset;
 
 public class JsonReader {
 
-    public JSONObject readJsonFromUrl(String url) {
+    public Optional<JSONObject> readJsonFromUrl(String url) {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(new URL(url).openStream(), Charset.forName("UTF-8")))) {
             String jsonText = readAll(reader);
             Object parsed = new JSONParser().parse(jsonText);
-            return (JSONObject) parsed;
+            return Optional.of((JSONObject) parsed);
         } catch (Exception e) {
-            throw new RuntimeException("Failed to read file", e);
+            //TODO Don't care if cannot create JSON object, but should probably log the error
+            return Optional.absent();
         }
     }
 
