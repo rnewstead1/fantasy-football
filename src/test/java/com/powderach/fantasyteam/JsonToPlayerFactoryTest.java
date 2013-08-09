@@ -13,7 +13,7 @@ public class JsonToPlayerFactoryTest {
     private String firstName;
     private String secondName;
     private String team;
-    private String position;
+    private Position position;
     private long lastSeasonPoints;
     private long cost;
     private Double selectedBy;
@@ -24,7 +24,7 @@ public class JsonToPlayerFactoryTest {
         firstName = "Diego";
         secondName = "Lugano";
         team = "West Brom";
-        position = "Defender";
+        position = Position.defender;
         lastSeasonPoints = 0;
         cost = 50;
         selectedBy = 0.3;
@@ -53,7 +53,7 @@ public class JsonToPlayerFactoryTest {
         jsonObject.put("first_name", firstName);
         jsonObject.put("second_name", secondName);
         jsonObject.put("team_name", team);
-        jsonObject.put("type_name", position);
+        jsonObject.put("type_name", position.display());
         jsonObject.put("last_season_points", lastSeasonPoints);
         jsonObject.put("now_cost", cost);
         jsonObject.put("selected_by", selectedBy);

@@ -16,7 +16,7 @@ public class JsonToPlayerFactory {
             String firstName = String.valueOf(jsonObject.get("first_name"));
             String secondName = String.valueOf(jsonObject.get("second_name"));
             String team = String.valueOf(jsonObject.get("team_name"));
-            String position = String.valueOf(jsonObject.get("type_name"));
+            Position position = Position.from(String.valueOf(jsonObject.get("type_name")));
             long lastSeasonPoints = (long) jsonObject.get("last_season_points");
             long cost = (long) jsonObject.get("now_cost");
             Double selectedBy = Double.parseDouble(String.valueOf(jsonObject.get("selected_by")));
