@@ -17,8 +17,9 @@ public class CheapestPlayerSelector {
         playerCollection.setObjectClass(Player.class);
 
         try (DBCursor cursor = playerCollection.find(query)) {
-            while (cursor.hasNext()) {
-                return (Player) cursor.sort(new BasicDBObject("cost", -1)).limit(1).next();
+            DBCursor sortedCursor = cursor.sort(new BasicDBObject("cost", 1)).limit(1);
+            while (sortedCursor.hasNext()) {
+                return (Player) sortedCursor.next();
             }
         }
         throw new IllegalStateException("Fail");
