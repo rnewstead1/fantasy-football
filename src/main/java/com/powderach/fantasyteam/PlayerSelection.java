@@ -4,6 +4,9 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class PlayerSelection {
     private final DBCollection playerCollection;
 
@@ -13,13 +16,19 @@ public class PlayerSelection {
     }
 
     public Player select(BasicDBObject query, BasicDBObject... sorts) {
+        return select(query, 1, sorts).get(0);
+    }
+
+    public List<Player> select(BasicDBObject query, int numberToReturn, BasicDBObject... sorts) {
+        List<Player> players = new ArrayList<>();
         try (DBCursor cursor = playerCollection.find(query)) {
-            DBCursor sortedCursor = sort(cursor, sorts).limit(1);
+            DBCursor sortedCursor = sort(cursor, sorts).limit(numberToReturn);
             while (sortedCursor.hasNext()) {
-                return (Player) sortedCursor.next();
+                Player player = (Player) sortedCursor.next();
+                players.add(player);
             }
+            return players;
         }
-        throw new IllegalStateException("Fail");
     }
 
     private DBCursor sort(DBCursor cursor, BasicDBObject... sorts) {
