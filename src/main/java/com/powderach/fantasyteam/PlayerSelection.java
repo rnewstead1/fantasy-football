@@ -12,9 +12,9 @@ public class PlayerSelection {
         playerCollection.setObjectClass(Player.class);
     }
 
-    public Player select(BasicDBObject query, BasicDBObject sortOrder) {
+    public Player select(BasicDBObject query, BasicDBObject... sorts) {
         try (DBCursor cursor = playerCollection.find(query)) {
-            DBCursor sortedCursor = cursor.sort(sortOrder).limit(1);
+            DBCursor sortedCursor = sort(cursor, sorts).limit(1);
             while (sortedCursor.hasNext()) {
                 return (Player) sortedCursor.next();
             }
@@ -22,13 +22,11 @@ public class PlayerSelection {
         throw new IllegalStateException("Fail");
     }
 
-    public Player select(BasicDBObject query, BasicDBObject sort1, BasicDBObject sort2) {
-        try (DBCursor cursor = playerCollection.find(query)) {
-            DBCursor sortedCursor = cursor.sort(sort1).sort(sort2).limit(1);
-            while (sortedCursor.hasNext()) {
-                return (Player) sortedCursor.next();
-            }
+    private DBCursor sort(DBCursor cursor, BasicDBObject... sorts) {
+        for (BasicDBObject sort : sorts) {
+            cursor.sort(sort);
         }
-        throw new IllegalStateException("Fail");
+
+        return cursor;
     }
 }
