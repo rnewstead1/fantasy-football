@@ -1,6 +1,7 @@
 package com.powderach.fantasyteam;
 
 import com.mongodb.DBCollection;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -21,6 +22,11 @@ public class PlayerSelectionFactoryTest {
         playerCollection = collectionFor("testdb", "testCollection");
         cheapestDefender = new Player("Diego", "Lugano", "West Brom", Position.defender, 0, 50, 0.3);
         setUpTestData();
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        playerCollection.drop();
     }
 
     @Test

@@ -25,7 +25,6 @@ public class PlayerSelectionTest {
         setUpTestData();
     }
 
-    //TODO this is def passing for the wrong reason - can't seem to make it fail...
     @Test
     public void sortsByMultipleFields() throws Exception {
         PlayerSelection playerSelection = new PlayerSelection(playerCollection);
