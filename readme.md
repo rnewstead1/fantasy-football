@@ -1,3 +1,3 @@
 #Fantasy Football Team Picker
 
-Picks a team based for http://fantasy.premierleague.com/
+Picks a team for http://fantasy.premierleague.com/
