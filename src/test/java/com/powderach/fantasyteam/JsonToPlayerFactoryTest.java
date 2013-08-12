@@ -14,7 +14,6 @@ public class JsonToPlayerFactoryTest {
     private String secondName;
     private String team;
     private Position position;
-    private long lastSeasonPoints;
     private long cost;
     private Double selectedBy;
     private JsonToPlayerFactory jsonToPlayerFactory;
@@ -25,7 +24,6 @@ public class JsonToPlayerFactoryTest {
         secondName = "Lugano";
         team = "West Brom";
         position = Position.defender;
-        lastSeasonPoints = 0;
         cost = 50;
         selectedBy = 0.3;
         jsonToPlayerFactory = new JsonToPlayerFactory();
@@ -35,7 +33,7 @@ public class JsonToPlayerFactoryTest {
     public void createsPlayerFromJsonObject() throws Exception {
         Optional<Player> player = jsonToPlayerFactory.createFrom(createJsonObject());
 
-        Player expectedPlayer = new Player(firstName, secondName, team, position, lastSeasonPoints, cost, selectedBy);
+        Player expectedPlayer = new Player(firstName, secondName, team, position, cost, selectedBy);
 
         assertThat(player.get(), is(expectedPlayer));
     }
@@ -54,7 +52,6 @@ public class JsonToPlayerFactoryTest {
         jsonObject.put("second_name", secondName);
         jsonObject.put("team_name", team);
         jsonObject.put("type_name", position.display());
-        jsonObject.put("last_season_points", lastSeasonPoints);
         jsonObject.put("now_cost", cost);
         jsonObject.put("selected_by", selectedBy);
 

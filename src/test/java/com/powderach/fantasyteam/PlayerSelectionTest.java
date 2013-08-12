@@ -21,17 +21,17 @@ public class PlayerSelectionTest extends PlayerSelectionTestBase {
 
     @Override
     protected void additionalSetup() {
-        defender1 = new Player("Eric", "Cantona", "Man Utd", defender, 0, 80, 0.3);
-        defender2 = new Player("Diego", "Lugano", "West Brom", defender, 0, 50, 0.3);
-        defender3 = new Player("Richard", "Best", "Man Utd", defender, 0, 60, 0.3);
-        defender4 = new Player("George", "Best", "Man Utd", defender, 0, 70, 0.3);
+        defender1 = new Player("Eric", "Cantona", "Man Utd", defender, 80, 0.3);
+        defender2 = new Player("Diego", "Lugano", "West Brom", defender, 50, 0.3);
+        defender3 = new Player("Richard", "Best", "Man Utd", defender, 60, 0.3);
+        defender4 = new Player("George", "Best", "Man Utd", defender, 70, 0.3);
         ArrayList<Player> players = newArrayList(
                 defender2,
-                new Player("Kevin", "Phillips", "Crystal Palace", forward, 0, 45, 1.8),
+                new Player("Kevin", "Phillips", "Crystal Palace", forward, 45, 1.8),
                 defender4,
                 defender1,
                 defender3,
-                new Player("George", "Normand", "Arsenal", Position.defender, 0, 10, 0.1)
+                new Player("George", "Normand", "Arsenal", Position.defender, 10, 0.1)
         );
 
         for (Player player : players) {

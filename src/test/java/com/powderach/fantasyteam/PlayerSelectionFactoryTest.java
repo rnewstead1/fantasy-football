@@ -13,11 +13,11 @@ public class PlayerSelectionFactoryTest extends PlayerSelectionTestBase {
 
     @Override
     protected void additionalSetup() {
-        cheapestDefender = new Player("Diego", "Lugano", "West Brom", Position.defender, 0, 50, 0.3);
+        cheapestDefender = new Player("Diego", "Lugano", "West Brom", Position.defender, 50, 0.3);
         ArrayList<Player> players = newArrayList(
                 cheapestDefender,
-                new Player("Kevin", "Phillips", "Crystal Palace", Position.forward, 0, 45, 1.8),
-                new Player("George", "Best", "Man Utd", Position.defender, 0, 70, 0.3)
+                new Player("Kevin", "Phillips", "Crystal Palace", Position.forward, 45, 1.8),
+                new Player("George", "Best", "Man Utd", Position.defender, 70, 0.3)
         );
 
         for (Player player : players) {

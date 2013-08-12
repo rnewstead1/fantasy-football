@@ -30,7 +30,7 @@ public class TeamRunner {
         Team team = teamSelection.select();
         String rendered = new TeamRenderer(team, new PlayerCostCalculator()).render();
 
-        System.out.println("rendered = " + rendered);
+        System.out.println(rendered);
     }
 
     private class PlayerCostCalculator {
