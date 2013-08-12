@@ -24,4 +24,6 @@ public class Player extends BasicDBObject {
     public Player() {
         //Needed for Mongo.
     }
+
+
 }

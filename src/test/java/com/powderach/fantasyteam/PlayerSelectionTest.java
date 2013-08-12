@@ -21,7 +21,7 @@ public class PlayerSelectionTest extends PlayerSelectionTestBase {
 
     @Override
     protected void additionalSetup() {
-        defender1 = new Player("Eric", "Cantona", "Man Utd", defender, 0, 40, 0.3);
+        defender1 = new Player("Eric", "Cantona", "Man Utd", defender, 0, 80, 0.3);
         defender2 = new Player("Diego", "Lugano", "West Brom", defender, 0, 50, 0.3);
         defender3 = new Player("Richard", "Best", "Man Utd", defender, 0, 60, 0.3);
         defender4 = new Player("George", "Best", "Man Utd", defender, 0, 70, 0.3);
@@ -30,7 +30,8 @@ public class PlayerSelectionTest extends PlayerSelectionTestBase {
                 new Player("Kevin", "Phillips", "Crystal Palace", forward, 0, 45, 1.8),
                 defender4,
                 defender1,
-                defender3
+                defender3,
+                new Player("George", "Normand", "Arsenal", Position.defender, 0, 10, 0.1)
         );
 
         for (Player player : players) {
@@ -40,25 +41,13 @@ public class PlayerSelectionTest extends PlayerSelectionTestBase {
     }
 
     @Test
-    public void sortsByMultipleFields() throws Exception {
-        Player player = playerSelection.select(
-                new BasicDBObject("position", defender.display()),
-                new BasicDBObject("selected_by", -1),
-                new BasicDBObject("cost", 1)
-        );
-
-        assertThat(player, is(defender1));
-    }
-
-    @Test
     public void returnsListOfPlayers() throws Exception {
         List<Player> expected = newArrayList(defender1, defender2, defender3, defender4);
 
         List<Player> players = playerSelection.select(
                 new BasicDBObject("position", defender.display()),
                 4,
-                new BasicDBObject("selected_by", -1),
-                new BasicDBObject("cost", 1)
+                new BasicDBObject("selected_by", -1)
         );
 
         assertThat(players, is(expected));

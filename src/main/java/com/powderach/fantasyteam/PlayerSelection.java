@@ -15,27 +15,19 @@ public class PlayerSelection {
         playerCollection.setObjectClass(Player.class);
     }
 
-    public Player select(BasicDBObject query, BasicDBObject... sorts) {
-        return select(query, 1, sorts).get(0);
+    public Player select(BasicDBObject query, BasicDBObject sort) {
+        return select(query, 1, sort).get(0);
     }
 
-    public List<Player> select(BasicDBObject query, int numberToReturn, BasicDBObject... sorts) {
+    public List<Player> select(BasicDBObject query, int numberToReturn, BasicDBObject sort) {
         List<Player> players = new ArrayList<>();
         try (DBCursor cursor = playerCollection.find(query)) {
-            DBCursor sortedCursor = sort(cursor, sorts).limit(numberToReturn);
+            DBCursor sortedCursor = cursor.sort(sort).limit(numberToReturn);
             while (sortedCursor.hasNext()) {
                 Player player = (Player) sortedCursor.next();
                 players.add(player);
             }
             return players;
         }
-    }
-
-    private DBCursor sort(DBCursor cursor, BasicDBObject... sorts) {
-        for (BasicDBObject sort : sorts) {
-            cursor.sort(sort);
-        }
-
-        return cursor;
     }
 }

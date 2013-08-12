@@ -20,6 +20,7 @@ public class DataCollectionRunner {
 
     public DataCollectionRunner() {
         this.playerCollection = collectionFor("playerdb", "player");
+        playerCollection.drop();
         jsonReader = new JsonReader();
         jsonToPlayerFactory = new JsonToPlayerFactory();
     }
