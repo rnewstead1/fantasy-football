@@ -20,7 +20,7 @@ public class JsonToPlayerFactory {
             Double selectedBy = Double.parseDouble(String.valueOf(jsonObject.get("selected_by")));
             long points = Long.parseLong(String.valueOf(jsonObject.get("total_points")));
 
-            return new Player(firstName, secondName, team, position, cost, selectedBy);
+            return new Player(firstName, secondName, team, position, cost, selectedBy, points);
         }
     }
 }

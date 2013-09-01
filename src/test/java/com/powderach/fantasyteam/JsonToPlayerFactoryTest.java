@@ -33,7 +33,7 @@ public class JsonToPlayerFactoryTest {
     public void createsPlayerFromJsonObject() throws Exception {
         Optional<Player> player = jsonToPlayerFactory.createFrom(createJsonObject());
 
-        Player expectedPlayer = new Player(firstName, secondName, team, position, cost, selectedBy);
+        Player expectedPlayer = new Player(firstName, secondName, team, position, cost, selectedBy, 5);
 
         assertThat(player.get(), is(expectedPlayer));
     }
