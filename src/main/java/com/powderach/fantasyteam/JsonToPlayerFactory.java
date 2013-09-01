@@ -18,6 +18,7 @@ public class JsonToPlayerFactory {
             Position position = Position.from(String.valueOf(jsonObject.get("type_name")));
             long cost = Long.parseLong(String.valueOf(jsonObject.get("now_cost")));
             Double selectedBy = Double.parseDouble(String.valueOf(jsonObject.get("selected_by")));
+            long points = Long.parseLong(String.valueOf(jsonObject.get("total_points")));
 
             return new Player(firstName, secondName, team, position, cost, selectedBy);
         }

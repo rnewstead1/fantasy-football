@@ -3,10 +3,7 @@ package com.powderach.fantasyteam.runner;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
-import com.powderach.fantasyteam.JsonReader;
-import com.powderach.fantasyteam.JsonToPlayerFactory;
-import com.powderach.fantasyteam.Player;
-import com.powderach.fantasyteam.Team;
+import com.powderach.fantasyteam.*;
 import com.powderach.fantasyteam.store.DataCollection;
 
 import static com.powderach.fantasyteam.store.MongoClientConnector.collectionFor;
@@ -29,9 +26,10 @@ public class TransferRunner {
 
         public void latestPointsFor(Team team) {
             for (Player player : team.allPlayers()) {
+                PlayerName playerName = player.name();
                 DBCursor cursor = playerCollection.find(
-                        new BasicDBObject("first_name", player.firstName()),
-                        new BasicDBObject("surname", player.surname())
+                        new BasicDBObject("first_name", playerName.firstName()),
+                        new BasicDBObject("surname", playerName.surname())
                 );
                 Player monkey = (Player) cursor.next();
             }

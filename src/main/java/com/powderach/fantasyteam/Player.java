@@ -31,12 +31,8 @@ public class Player extends BasicDBObject {
         return Position.from(String.valueOf(get(POSITION)));
     }
 
-    public String firstName() {
-        return String.valueOf(get(FIRST_NAME));
-    }
-
-    public String surname() {
-        return String.valueOf(get(SURNAME));
+    public PlayerName name() {
+        return new PlayerName(String.valueOf(get(FIRST_NAME)), String.valueOf(get(SURNAME)));
     }
 
     @Override

@@ -1,5 +1,7 @@
 package com.powderach.fantasyteam;
 
+import com.google.common.base.Function;
+import com.google.common.collect.Collections2;
 import com.mongodb.BasicDBObject;
 
 import java.util.Collection;
@@ -15,7 +17,7 @@ public class Team extends BasicDBObject {
     public Team(Map<Position, List<Player>> players) {
         this.players = players;
         for (Position position : players.keySet()) {
-            this.put(position.display(), players.get(position));
+            this.put(position.display(), playerNamesFrom(players, position));
         }
     }
 
@@ -43,4 +45,15 @@ public class Team extends BasicDBObject {
 
         return superList;
     }
+
+    private Collection<PlayerName> playerNamesFrom(Map<Position, List<Player>> players, Position position) {
+        Collection<PlayerName> names = Collections2.transform(players.get(position), new Function<Player, PlayerName>() {
+            @Override
+            public PlayerName apply(Player player) {
+                return player.name();
+            }
+        });
+        return names;
+    }
+
 }
