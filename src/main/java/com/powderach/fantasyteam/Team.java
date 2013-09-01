@@ -10,7 +10,7 @@ public class Team {
     private Map<Position, List<Player>> players;
 
     public Team() {
-        players = new HashMap<>();
+        players = new HashMap<Position, List<Player>>();
     }
 
     public void addGoalkeepers(List<Player> goalkeepers) {

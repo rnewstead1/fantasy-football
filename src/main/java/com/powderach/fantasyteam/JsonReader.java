@@ -14,10 +14,11 @@ import java.nio.charset.Charset;
 public class JsonReader {
 
     public Optional<JSONObject> readJsonFromUrl(String url) {
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new URL(url).openStream(), Charset.forName("UTF-8")))) {
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(new URL(url).openStream(), Charset.forName("UTF-8")));
             String jsonText = readAll(reader);
             Object parsed = new JSONParser().parse(jsonText);
-            return Optional.of((JSONObject) parsed);
+            return com.google.common.base.Optional.of((JSONObject) parsed);
         } catch (Exception e) {
             //TODO Don't care if cannot create JSON object, but should probably log the error
             return Optional.absent();

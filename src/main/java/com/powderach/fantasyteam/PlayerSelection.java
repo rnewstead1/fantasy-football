@@ -20,14 +20,13 @@ public class PlayerSelection {
     }
 
     public List<Player> select(BasicDBObject query, int numberToReturn, BasicDBObject sort) {
-        List<Player> players = new ArrayList<>();
-        try (DBCursor cursor = playerCollection.find(query)) {
-            DBCursor sortedCursor = cursor.sort(sort).limit(numberToReturn);
-            while (sortedCursor.hasNext()) {
-                Player player = (Player) sortedCursor.next();
-                players.add(player);
-            }
-            return players;
+        List<Player> players = new ArrayList<Player>();
+        DBCursor cursor = playerCollection.find(query);
+        DBCursor sortedCursor = cursor.sort(sort).limit(numberToReturn);
+        while (sortedCursor.hasNext()) {
+            Player player = (Player) sortedCursor.next();
+            players.add(player);
         }
+        return players;
     }
 }
