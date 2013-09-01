@@ -8,7 +8,7 @@ import static com.google.common.collect.Lists.newArrayList;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class PlayerSelectionFactoryTest extends PlayerSelectionTestBase {
+public class PlayerSelectorTest extends PlayerSelectionTestBase {
     private Player cheapestDefender;
 
     @Override
@@ -27,9 +27,9 @@ public class PlayerSelectionFactoryTest extends PlayerSelectionTestBase {
 
     @Test
     public void findsCheapestDefender() throws Exception {
-        PlayerSelectionFactory playerSelectionFactory = new PlayerSelectionFactory(playerCollection);
+        PlayerSelector playerSelector = new PlayerSelector(playerCollection);
 
-        Player cheapest = playerSelectionFactory.cheapest(Position.defender);
+        Player cheapest = playerSelector.cheapest(Position.defender);
 
         assertThat(cheapest, is(cheapestDefender));
     }

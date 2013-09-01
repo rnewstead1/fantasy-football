@@ -9,10 +9,10 @@ import java.util.List;
 import static com.powderach.fantasyteam.Position.*;
 import static java.util.Collections.sort;
 
-public class PlayerSelectionFactory {
+public class PlayerSelector {
     private final PlayerSelection playerSelection;
 
-    public PlayerSelectionFactory(DBCollection playerCollection) {
+    public PlayerSelector(DBCollection playerCollection) {
         this.playerSelection = new PlayerSelection(playerCollection);
     }
 

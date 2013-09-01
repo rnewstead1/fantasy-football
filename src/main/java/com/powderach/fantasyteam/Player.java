@@ -27,6 +27,18 @@ public class Player extends BasicDBObject {
         //Needed for Mongo.
     }
 
+    public Position position() {
+        return Position.from(String.valueOf(get(POSITION)));
+    }
+
+    public String firstName() {
+        return String.valueOf(get(FIRST_NAME));
+    }
+
+    public String surname() {
+        return String.valueOf(get(SURNAME));
+    }
+
     @Override
     public int hashCode() {
         return HashCodeBuilder.reflectionHashCode(this);
