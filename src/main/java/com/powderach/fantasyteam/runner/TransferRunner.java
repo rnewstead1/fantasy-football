@@ -29,7 +29,7 @@ public class TransferRunner {
         public List<Transfer> suggestFor(Map<PlayerName, Long> currentPlayers) {
             Ordering<PlayerName> ordering = Ordering.natural().onResultOf(Functions.forMap(currentPlayers));
             ImmutableList<PlayerName> playerNames = ordering.immutableSortedCopy(currentPlayers.keySet());
-            
+
             return null;
         }
     }

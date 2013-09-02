@@ -2,10 +2,13 @@ package com.powderach.fantasyteam.store;
 
 import com.google.common.base.Function;
 import com.google.common.base.Optional;
+import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
+import com.mongodb.DBCursor;
 import com.powderach.fantasyteam.JsonReader;
 import com.powderach.fantasyteam.JsonToPlayerFactory;
 import com.powderach.fantasyteam.Player;
+import com.powderach.fantasyteam.PlayerName;
 import org.json.simple.JSONObject;
 
 import static com.powderach.fantasyteam.store.MongoClientConnector.collectionFor;
@@ -23,6 +26,14 @@ public class DataCollection {
         this.jsonToPlayerFactory = jsonToPlayerFactory;
         this.playerCollection = collectionFor("playerdb", "player");
         playerCollection.drop();
+    }
+
+    public static Player findPlayerBy(PlayerName playerName) {
+        DBCursor cursor = playerCollection.find(
+                new BasicDBObject("first_name", playerName.firstName()),
+                new BasicDBObject("surname", playerName.surname())
+        );
+        return (Player) cursor.next();
     }
 
     public void getDataUpToPlayerNumber(int index) {
