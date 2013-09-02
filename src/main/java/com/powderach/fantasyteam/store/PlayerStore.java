@@ -14,21 +14,21 @@ import org.json.simple.JSONObject;
 import static com.powderach.fantasyteam.store.MongoClientConnector.collectionFor;
 import static java.lang.String.format;
 
-public class DataCollection {
+public class PlayerStore {
     private static final String REQUEST_URL = "http://fantasy.premierleague.com/web/api/elements/%s/";
 
     private final JsonReader jsonReader;
     private final JsonToPlayerFactory jsonToPlayerFactory;
     private final DBCollection playerCollection;
 
-    public DataCollection(JsonReader jsonReader, JsonToPlayerFactory jsonToPlayerFactory) {
+    public PlayerStore(JsonReader jsonReader, JsonToPlayerFactory jsonToPlayerFactory) {
         this.jsonReader = jsonReader;
         this.jsonToPlayerFactory = jsonToPlayerFactory;
         this.playerCollection = collectionFor("playerdb", "player");
         playerCollection.drop();
     }
 
-    public static Player findPlayerBy(PlayerName playerName) {
+    public Player findPlayerBy(PlayerName playerName) {
         DBCursor cursor = playerCollection.find(
                 new BasicDBObject("first_name", playerName.firstName()),
                 new BasicDBObject("surname", playerName.surname())
