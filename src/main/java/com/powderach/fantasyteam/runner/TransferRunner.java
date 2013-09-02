@@ -1,12 +1,17 @@
 package com.powderach.fantasyteam.runner;
 
-import com.mongodb.BasicDBObject;
-import com.mongodb.DBCollection;
-import com.mongodb.DBCursor;
-import com.powderach.fantasyteam.*;
+import com.google.common.base.Functions;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Ordering;
+import com.powderach.fantasyteam.JsonReader;
+import com.powderach.fantasyteam.JsonToPlayerFactory;
+import com.powderach.fantasyteam.LatestPointsCalculator;
+import com.powderach.fantasyteam.PlayerName;
 import com.powderach.fantasyteam.store.DataCollection;
+import com.powderach.fantasyteam.store.TeamStore;
 
-import static com.powderach.fantasyteam.store.MongoClientConnector.collectionFor;
+import java.util.List;
+import java.util.Map;
 
 public class TransferRunner {
 
@@ -14,27 +19,21 @@ public class TransferRunner {
         DataCollection dataCollection = new DataCollection(new JsonReader(), new JsonToPlayerFactory());
         dataCollection.getDataUpToPlayerNumber(532);
 
+        LatestPointsCalculator latestPointsCalculator = new LatestPointsCalculator();
+        Map<PlayerName,Long> currentPlayerPoints = latestPointsCalculator.latestPointsFor(new TeamStore().retrieve());
+
     }
 
 
-    public static class LatestPointsCalculator {
-        private DBCollection playerCollection;
-
-        public LatestPointsCalculator() {
-            playerCollection = collectionFor("playerdb", "player");
-        }
-
-        public void latestPointsFor(Team team) {
-            for (Player player : team.allPlayers()) {
-                PlayerName playerName = player.name();
-                DBCursor cursor = playerCollection.find(
-                        new BasicDBObject("first_name", playerName.firstName()),
-                        new BasicDBObject("surname", playerName.surname())
-                );
-                Player monkey = (Player) cursor.next();
-            }
+    public static class TransferSuggester {
+        public List<Transfer> suggestFor(Map<PlayerName, Long> currentPlayers) {
+            Ordering<PlayerName> ordering = Ordering.natural().onResultOf(Functions.forMap(currentPlayers));
+            ImmutableList<PlayerName> playerNames = ordering.immutableSortedCopy(currentPlayers.keySet());
+            
+            return null;
         }
     }
 
-
+    private static class Transfer {
+    }
 }

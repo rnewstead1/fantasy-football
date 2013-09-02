@@ -26,13 +26,9 @@ public class TeamSelector {
 
         Team team = teamBuilder.build();
 
-        store(team);
+        teamStore.store(team);
 
         return team;
-    }
-
-    private void store(Team team) {
-        teamStore.store(team);
     }
 
 }

@@ -37,6 +37,10 @@ public class Player extends BasicDBObject {
         return new PlayerName(String.valueOf(get(FIRST_NAME)), String.valueOf(get(SURNAME)));
     }
 
+    public Long totalPoints() {
+        return Long.parseLong(String.valueOf(get(POINTS)));
+    }
+
     @Override
     public int hashCode() {
         return HashCodeBuilder.reflectionHashCode(this);
