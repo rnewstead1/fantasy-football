@@ -2,9 +2,9 @@ package com.powderach.fantasyteam;
 
 import com.powderach.fantasyteam.store.PlayerStore;
 
-import java.util.Map;
+import java.util.List;
 
-import static com.google.common.collect.Maps.newHashMap;
+import static com.google.common.collect.Lists.newArrayList;
 
 public class LatestPointsCalculator {
     private final PlayerStore playerStore;
@@ -13,13 +13,11 @@ public class LatestPointsCalculator {
         this.playerStore = playerStore;
     }
 
-    //Player object has points on it but we don't want to look at it...
-    public Map<PlayerName, Long> latestPointsFor(Team team) {
-        Map<PlayerName, Long> teamPlayerPoints = newHashMap();
+    public List<Player> latestPointsFor(Team team) {
+        List<Player> teamPlayerPoints = newArrayList();
         for (Player player : team.allPlayers()) {
             PlayerName playerName = player.name();
-            Player retrieved  = playerStore.findPlayerBy(playerName);
-            teamPlayerPoints.put(retrieved.name(), retrieved.totalPoints());
+            teamPlayerPoints.add(playerStore.findPlayerBy(playerName));
         }
         return teamPlayerPoints;
         }

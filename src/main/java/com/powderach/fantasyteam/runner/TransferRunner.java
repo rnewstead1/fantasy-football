@@ -3,11 +3,11 @@ package com.powderach.fantasyteam.runner;
 import com.powderach.fantasyteam.JsonReader;
 import com.powderach.fantasyteam.JsonToPlayerFactory;
 import com.powderach.fantasyteam.LatestPointsCalculator;
-import com.powderach.fantasyteam.PlayerName;
+import com.powderach.fantasyteam.Player;
 import com.powderach.fantasyteam.store.PlayerStore;
 import com.powderach.fantasyteam.store.TeamStore;
 
-import java.util.Map;
+import java.util.List;
 
 public class TransferRunner {
 
@@ -16,6 +16,6 @@ public class TransferRunner {
         playerStore.getDataUpToPlayerNumber(532);
 
         LatestPointsCalculator latestPointsCalculator = new LatestPointsCalculator(new PlayerStore(new JsonReader(), new JsonToPlayerFactory()));
-        Map<PlayerName, Long> currentPlayerPoints = latestPointsCalculator.latestPointsFor(new TeamStore().retrieve());
+        List<Player> currentPlayerPoints = latestPointsCalculator.latestPointsFor(new TeamStore().retrieve());
     }
 }
