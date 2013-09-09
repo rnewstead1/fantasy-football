@@ -14,14 +14,17 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class PlayerStoreTest extends StoreTestBase {
     private PlayerStore playerStore;
     private Player expected;
+    private Player playerWithTwoWordSurname;
 
     @Override
     protected void additionalSetup() {
         expected = new Player("Diego", "Lugano", "West Brom", Position.defender, 50, 0.3, 6);
+        playerWithTwoWordSurname = new Player("Ruud", "Van Nistelroy", "Man Utd", Position.forward, 50, 9.3, 5);
         ArrayList<Player> players = newArrayList(
                 expected,
                 new Player("Kevin", "Phillips", "Crystal Palace", Position.forward, 45, 1.8, 6),
-                new Player("George", "Best", "Man Utd", Position.defender, 70, 0.3, 7)
+                new Player("George", "Best", "Man Utd", Position.defender, 70, 0.3, 7),
+                playerWithTwoWordSurname
         );
 
         for (Player player : players) {
@@ -37,8 +40,13 @@ public class PlayerStoreTest extends StoreTestBase {
     }
 
     @Test
+    public void retrievesPlayerWithTwoWordSurname() throws Exception {
+        assertThat(playerStore.findPlayerBy(new PlayerName("Ruud", "Van Nistelroy")), is(playerWithTwoWordSurname));
+    }
+
+    @Test
     public void throwsExceptionIfPlayerIsNotFound() throws Exception {
-        PlayerName unknownPlayerName = new PlayerName("some name");
+        PlayerName unknownPlayerName = new PlayerName("firstName", "surname");
         try {
             playerStore.findPlayerBy(unknownPlayerName);
             Assert.fail(String.format("Expected [%s]", IllegalArgumentException.class.getSimpleName()));

@@ -14,12 +14,6 @@ public class PlayerName {
         this.surname = surname;
     }
 
-    public PlayerName(String name) {
-        String[] split = name.split(" ");
-        this.firstName = split[0];
-        this.surname = split[1];
-    }
-
     public String firstName() {
         return firstName;
     }

@@ -26,33 +26,35 @@ public class TeamRunner {
 
     private static Team manuallyStoreTeam() {
         PlayerStore playerStore = new PlayerStore(collectionFor("playerdb", "player"), new JsonReader(), new JsonToPlayerFactory());
+        System.out.println("Starting to collect data...");
         playerStore.getDataUpToPlayerNumber(532);
+        System.out.println("Got data!");
         Map<Position, List<Player>> players = newHashMap();
         players.put(goalkeeper, asList(
-                playerStore.findPlayerBy(new PlayerName("Simon Mignolet")),
-                playerStore.findPlayerBy(new PlayerName("Kelvin Davis"))
+                playerStore.findPlayerBy(new PlayerName("Simon", "Mignolet")),
+                playerStore.findPlayerBy(new PlayerName("Kelvin", "Davis"))
         ));
 
         players.put(defender, asList(
-                playerStore.findPlayerBy(new PlayerName("Per Mertesacker")),
-                playerStore.findPlayerBy(new PlayerName("Javier Garrido")),
-                playerStore.findPlayerBy(new PlayerName("Ashley Williams")),
-                playerStore.findPlayerBy(new PlayerName("Nathan Baker")),
-                playerStore.findPlayerBy(new PlayerName("Branislav Ivanovich"))
+                playerStore.findPlayerBy(new PlayerName("Per", "Mertesacker")),
+                playerStore.findPlayerBy(new PlayerName("Javier", "Garrido")),
+                playerStore.findPlayerBy(new PlayerName("Ashley", "Williams")),
+                playerStore.findPlayerBy(new PlayerName("Nathan", "Baker")),
+                playerStore.findPlayerBy(new PlayerName("Branislav", "Ivanovich"))
         ));
 
         players.put(midfielder, asList(
-                playerStore.findPlayerBy(new PlayerName("Jack Colback")),
-                playerStore.findPlayerBy(new PlayerName("Eden Hazard")),
+                playerStore.findPlayerBy(new PlayerName("Jack", "Colback")),
+                playerStore.findPlayerBy(new PlayerName("Eden", "Hazard")),
                 playerStore.findPlayerBy(new PlayerName("Gnegneri", "Yaya Toure")),
-                playerStore.findPlayerBy(new PlayerName("Emboaba Oscar")),
-                playerStore.findPlayerBy(new PlayerName("Christian Benteke"))
+                playerStore.findPlayerBy(new PlayerName("Emboaba", "Oscar")),
+                playerStore.findPlayerBy(new PlayerName("Christian", "Benteke"))
         ));
 
         players.put(forward, asList(
                 playerStore.findPlayerBy(new PlayerName("Robin", "van Persie")),
-                playerStore.findPlayerBy(new PlayerName("Kelvin Davis")),
-                playerStore.findPlayerBy(new PlayerName("Luke Moore"))
+                playerStore.findPlayerBy(new PlayerName("Kelvin", "Davis")),
+                playerStore.findPlayerBy(new PlayerName("Luke", "Moore"))
         ));
 
 
