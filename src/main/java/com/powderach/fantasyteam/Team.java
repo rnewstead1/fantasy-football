@@ -21,6 +21,9 @@ public class Team extends BasicDBObject {
         }
     }
 
+    // Needed for Mongo
+    public Team() {}
+
     public List<Player> goalkeepers() {
         return players.get(goalkeeper);
     }

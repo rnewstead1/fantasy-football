@@ -9,11 +9,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static com.powderach.fantasyteam.store.MongoClientConnector.collectionFor;
+
 public class TeamServlet extends HttpServlet {
     private final TeamStore teamStore;
 
     public TeamServlet() {
-        teamStore = new TeamStore();
+        teamStore = new TeamStore(collectionFor("playerdb", "team"));
     }
 
     @Override

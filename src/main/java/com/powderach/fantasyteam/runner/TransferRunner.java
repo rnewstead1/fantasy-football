@@ -18,6 +18,6 @@ public class TransferRunner {
         playerStore.getDataUpToPlayerNumber(532);
 
         LatestPointsCalculator latestPointsCalculator = new LatestPointsCalculator(new PlayerStore(collectionFor("playerdb", "player"), new JsonReader(), new JsonToPlayerFactory()));
-        List<Player> currentPlayerPoints = latestPointsCalculator.latestPointsFor(new TeamStore().retrieve());
+        List<Player> currentPlayerPoints = latestPointsCalculator.latestPointsFor(new TeamStore(collectionFor("playerdb", "team")).retrieve());
     }
 }

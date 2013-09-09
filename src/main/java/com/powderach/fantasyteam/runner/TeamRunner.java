@@ -26,9 +26,9 @@ public class TeamRunner {
 
     private static Team manuallyStoreTeam() {
         PlayerStore playerStore = new PlayerStore(collectionFor("playerdb", "player"), new JsonReader(), new JsonToPlayerFactory());
-        System.out.println("Starting to collect data...");
-        playerStore.getDataUpToPlayerNumber(532);
-        System.out.println("Got data!");
+//        System.out.println("Starting to collect data...");
+//        playerStore.getDataUpToPlayerNumber(532);
+//        System.out.println("Got data!");
         Map<Position, List<Player>> players = newHashMap();
         players.put(goalkeeper, asList(
                 playerStore.findPlayerBy(new PlayerName("Simon", "Mignolet")),
@@ -40,13 +40,13 @@ public class TeamRunner {
                 playerStore.findPlayerBy(new PlayerName("Javier", "Garrido")),
                 playerStore.findPlayerBy(new PlayerName("Ashley", "Williams")),
                 playerStore.findPlayerBy(new PlayerName("Nathan", "Baker")),
-                playerStore.findPlayerBy(new PlayerName("Branislav", "Ivanovich"))
+                playerStore.findPlayerBy(new PlayerName("Branislav", "Ivanovic"))
         ));
 
         players.put(midfielder, asList(
                 playerStore.findPlayerBy(new PlayerName("Jack", "Colback")),
                 playerStore.findPlayerBy(new PlayerName("Eden", "Hazard")),
-                playerStore.findPlayerBy(new PlayerName("Gnegneri", "Yaya Toure")),
+                playerStore.findPlayerBy(new PlayerName("Gnegneri Yaya", "Touré")),
                 playerStore.findPlayerBy(new PlayerName("Emboaba", "Oscar")),
                 playerStore.findPlayerBy(new PlayerName("Christian", "Benteke"))
         ));
@@ -59,7 +59,7 @@ public class TeamRunner {
 
 
         Team team = new Team(players);
-        TeamStore teamStore = new TeamStore();
+        TeamStore teamStore = new TeamStore(collectionFor("playerdb", "team"));
         teamStore.store(team);
         return team;
     }
