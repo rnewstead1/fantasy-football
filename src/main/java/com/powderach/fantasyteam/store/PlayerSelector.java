@@ -1,7 +1,9 @@
-package com.powderach.fantasyteam;
+package com.powderach.fantasyteam.store;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
+import com.powderach.fantasyteam.Player;
+import com.powderach.fantasyteam.Position;
 
 import java.util.Comparator;
 import java.util.List;

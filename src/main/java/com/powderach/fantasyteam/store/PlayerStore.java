@@ -11,7 +11,6 @@ import com.powderach.fantasyteam.Player;
 import com.powderach.fantasyteam.PlayerName;
 import org.json.simple.JSONObject;
 
-import static com.powderach.fantasyteam.store.MongoClientConnector.collectionFor;
 import static java.lang.String.format;
 
 public class PlayerStore {
@@ -21,22 +20,25 @@ public class PlayerStore {
     private final JsonToPlayerFactory jsonToPlayerFactory;
     private final DBCollection playerCollection;
 
-    public PlayerStore(JsonReader jsonReader, JsonToPlayerFactory jsonToPlayerFactory) {
+    public PlayerStore(DBCollection dbCollection, JsonReader jsonReader, JsonToPlayerFactory jsonToPlayerFactory) {
         this.jsonReader = jsonReader;
         this.jsonToPlayerFactory = jsonToPlayerFactory;
-        this.playerCollection = collectionFor("playerdb", "player");
-        playerCollection.drop();
+        this.playerCollection = dbCollection;
+        playerCollection.setObjectClass(Player.class);
     }
 
     public Player findPlayerBy(PlayerName playerName) {
         DBCursor cursor = playerCollection.find(
-                new BasicDBObject("first_name", playerName.firstName()),
-                new BasicDBObject("surname", playerName.surname())
+                new BasicDBObject("first_name", playerName.firstName()).append("surname", playerName.surname())
         );
-        return (Player) cursor.next();
+        if (cursor.hasNext()) {
+            return (Player) cursor.next();
+        }
+        throw new IllegalArgumentException(String.format("Player [%s %s] was not found", playerName.firstName(), playerName.surname()));
     }
 
     public void getDataUpToPlayerNumber(int index) {
+        playerCollection.drop();
         for (int i = 1; i <= index; i++) {
             Optional<JSONObject> jsonObject = jsonReader.readJsonFromUrl(format(REQUEST_URL, i));
             Optional<Player> player = jsonToPlayerFactory.createFrom(jsonObject);

@@ -1,5 +1,6 @@
 package com.powderach.fantasyteam;
 
+import com.powderach.fantasyteam.store.PlayerSelector;
 import com.powderach.fantasyteam.store.TeamStore;
 
 public class TeamSelector {

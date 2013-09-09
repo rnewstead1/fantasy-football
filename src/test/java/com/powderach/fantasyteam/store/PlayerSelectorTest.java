@@ -1,5 +1,7 @@
-package com.powderach.fantasyteam;
+package com.powderach.fantasyteam.store;
 
+import com.powderach.fantasyteam.Player;
+import com.powderach.fantasyteam.Position;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -8,7 +10,7 @@ import static com.google.common.collect.Lists.newArrayList;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class PlayerSelectorTest extends PlayerSelectionTestBase {
+public class PlayerSelectorTest extends StoreTestBase {
     private Player cheapestDefender;
 
     @Override
@@ -21,13 +23,13 @@ public class PlayerSelectorTest extends PlayerSelectionTestBase {
         );
 
         for (Player player : players) {
-            playerCollection.insert(player);
+            collectionForTest.insert(player);
         }
     }
 
     @Test
     public void findsCheapestDefender() throws Exception {
-        PlayerSelector playerSelector = new PlayerSelector(playerCollection);
+        PlayerSelector playerSelector = new PlayerSelector(collectionForTest);
 
         Player cheapest = playerSelector.cheapest(Position.defender);
 

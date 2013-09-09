@@ -3,6 +3,7 @@ package com.powderach.fantasyteam.runner;
 import com.mongodb.DBCollection;
 import com.powderach.fantasyteam.*;
 import com.powderach.fantasyteam.renderer.TeamRenderer;
+import com.powderach.fantasyteam.store.PlayerSelector;
 import com.powderach.fantasyteam.store.PlayerStore;
 import com.powderach.fantasyteam.store.TeamStore;
 
@@ -24,7 +25,7 @@ public class TeamRunner {
     }
 
     private static Team manuallyStoreTeam() {
-        PlayerStore playerStore = new PlayerStore(new JsonReader(), new JsonToPlayerFactory());
+        PlayerStore playerStore = new PlayerStore(collectionFor("playerdb", "player"), new JsonReader(), new JsonToPlayerFactory());
         playerStore.getDataUpToPlayerNumber(532);
         Map<Position, List<Player>> players = newHashMap();
         players.put(goalkeeper, asList(

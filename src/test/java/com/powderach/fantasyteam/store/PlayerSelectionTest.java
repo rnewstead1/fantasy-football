@@ -1,6 +1,8 @@
-package com.powderach.fantasyteam;
+package com.powderach.fantasyteam.store;
 
 import com.mongodb.BasicDBObject;
+import com.powderach.fantasyteam.Player;
+import com.powderach.fantasyteam.Position;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -12,7 +14,7 @@ import static com.powderach.fantasyteam.Position.forward;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class PlayerSelectionTest extends PlayerSelectionTestBase {
+public class PlayerSelectionTest extends StoreTestBase {
     private Player defender1;
     private PlayerSelection playerSelection;
     private Player defender2;
@@ -35,9 +37,9 @@ public class PlayerSelectionTest extends PlayerSelectionTestBase {
         );
 
         for (Player player : players) {
-            playerCollection.insert(player);
+            collectionForTest.insert(player);
         }
-        playerSelection = new PlayerSelection(playerCollection);
+        playerSelection = new PlayerSelection(collectionForTest);
     }
 
     @Test

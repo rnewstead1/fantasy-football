@@ -1,5 +1,6 @@
 package com.powderach.fantasyteam;
 
+import com.powderach.fantasyteam.store.TeamStore;
 import org.json.simple.JSONObject;
 
 import javax.servlet.ServletException;
@@ -9,10 +10,17 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class TeamServlet extends HttpServlet {
+    private final TeamStore teamStore;
+
+    public TeamServlet() {
+        teamStore = new TeamStore();
+    }
+
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            String content = createJsonObject().toJSONString();
+//            String content = createJsonObject().toJSONString();
+            String content = teamStore.retrieve().toString();
             writeToResponse(response, content, 200);
         } catch (RuntimeException e) {
             writeToResponse(response, e.getMessage(), 400);

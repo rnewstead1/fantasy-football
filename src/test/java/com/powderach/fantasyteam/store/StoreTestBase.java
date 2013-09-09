@@ -1,4 +1,4 @@
-package com.powderach.fantasyteam;
+package com.powderach.fantasyteam.store;
 
 import com.mongodb.DBCollection;
 import org.junit.After;
@@ -6,8 +6,8 @@ import org.junit.Before;
 
 import static com.powderach.fantasyteam.store.MongoClientConnector.collectionFor;
 
-public abstract class PlayerSelectionTestBase {
-    protected DBCollection playerCollection;
+public abstract class StoreTestBase {
+    protected DBCollection collectionForTest;
 
     protected void additionalSetup() {
     }
@@ -17,13 +17,13 @@ public abstract class PlayerSelectionTestBase {
 
     @Before
     public final void setUp() throws Exception {
-        playerCollection = collectionFor("testdb", "testCollection");
+        collectionForTest = collectionFor("testdb", "testCollection");
         additionalSetup();
     }
 
     @After
     public final void tearDown() throws Exception {
-        playerCollection.drop();
+        collectionForTest.drop();
         additionalTearDown();
     }
 }

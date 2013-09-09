@@ -9,13 +9,15 @@ import com.powderach.fantasyteam.store.TeamStore;
 
 import java.util.List;
 
+import static com.powderach.fantasyteam.store.MongoClientConnector.collectionFor;
+
 public class TransferRunner {
 
     public static void main(String[] args) {
-        PlayerStore playerStore = new PlayerStore(new JsonReader(), new JsonToPlayerFactory());
+        PlayerStore playerStore = new PlayerStore(collectionFor("playerdb", "player"), new JsonReader(), new JsonToPlayerFactory());
         playerStore.getDataUpToPlayerNumber(532);
 
-        LatestPointsCalculator latestPointsCalculator = new LatestPointsCalculator(new PlayerStore(new JsonReader(), new JsonToPlayerFactory()));
+        LatestPointsCalculator latestPointsCalculator = new LatestPointsCalculator(new PlayerStore(collectionFor("playerdb", "player"), new JsonReader(), new JsonToPlayerFactory()));
         List<Player> currentPlayerPoints = latestPointsCalculator.latestPointsFor(new TeamStore().retrieve());
     }
 }
