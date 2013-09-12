@@ -3,7 +3,7 @@ Ext.define('Team.view.FantasyTeamView', {
     alias: 'widget.fantasyTeamView',
 
     requires: [
-        'Team.view.AppContainer'
+        'Team.view.TeamPanel'
     ],
 
     itemId: 'fantasyTeamView',
@@ -18,7 +18,7 @@ Ext.define('Team.view.FantasyTeamView', {
 
             items: [
                 {
-                    xtype: 'appContainer'
+                    xtype: 'teamPanel'
                 }
             ]
         });

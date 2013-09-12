@@ -30,7 +30,7 @@ public class TeamServlet extends HttpServlet {
     }
 
     public String contextPath() {
-        return "/team/*";
+        return "/api/team/*";
     }
 
     private void writeToResponse(HttpServletResponse response, String content, int status) throws IOException {

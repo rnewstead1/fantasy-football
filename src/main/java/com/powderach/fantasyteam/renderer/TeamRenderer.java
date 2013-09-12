@@ -3,6 +3,8 @@ package com.powderach.fantasyteam.renderer;
 import com.powderach.fantasyteam.Player;
 import com.powderach.fantasyteam.PlayerCostCalculator;
 import com.powderach.fantasyteam.Team;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 import java.util.List;
 
@@ -15,7 +17,14 @@ public class TeamRenderer {
         this.calculator = calculator;
     }
 
-    public String render() {
+    public JSONObject renderToJson() {
+        JSONObject teamObject = new JSONObject();
+        JSONArray teamArray = new JSONArray();
+        teamObject.put("team", teamArray);
+        return teamObject;
+    }
+
+    public String renderToString() {
         StringBuilder stringBuilder = new StringBuilder();
         List<Player> goalkeepers = team.goalkeepers();
         List<Player> defenders = team.defenders();

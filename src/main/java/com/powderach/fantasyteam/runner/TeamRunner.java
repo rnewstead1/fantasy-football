@@ -20,7 +20,7 @@ public class TeamRunner {
         Team team = manuallyStoreTeam();
 //        Team team = createTeam(teamRunner);
 
-        String rendered = new TeamRenderer(team, new PlayerCostCalculator()).render();
+        String rendered = new TeamRenderer(team, new PlayerCostCalculator()).renderToString();
         System.out.println(rendered);
     }
 

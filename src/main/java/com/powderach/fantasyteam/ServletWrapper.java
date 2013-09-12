@@ -30,7 +30,7 @@ public class ServletWrapper {
     public void staticResources(String resourceBase) {
         ResourceHandler extResourceHandler = new ResourceHandler();
         extResourceHandler.setResourceBase(resourceBase);
-        extResourceHandler.setWelcomeFiles(new String[]{"welcome.html"});
+        extResourceHandler.setWelcomeFiles(new String[]{"index.html"});
         extResourceHandler.setDirectoriesListed(true);
 
         ContextHandler contextHandler = new ContextHandler(rootContext);
