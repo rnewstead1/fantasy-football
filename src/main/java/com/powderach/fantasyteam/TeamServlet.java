@@ -1,5 +1,6 @@
 package com.powderach.fantasyteam;
 
+import com.mongodb.util.JSON;
 import com.powderach.fantasyteam.store.TeamStore;
 import org.json.simple.JSONObject;
 
@@ -22,7 +23,8 @@ public class TeamServlet extends HttpServlet {
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
 //            String content = createJsonObject().toJSONString();
-            String content = teamStore.retrieve().toString();
+            Team team = teamStore.retrieve();
+            String content = JSON.serialize(team);
             writeToResponse(response, content, 200);
         } catch (RuntimeException e) {
             writeToResponse(response, e.getMessage(), 400);

@@ -1,0 +1,72 @@
+package com.powderach.fantasyteam;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import static com.google.common.collect.Lists.newArrayList;
+import static com.powderach.fantasyteam.Position.*;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+
+public class TeamTest {
+
+    private List<Player> goalkeepers;
+    private List<Player> defenders;
+    private List<Player> midfielders;
+    private List<Player> forwards;
+    private Team team;
+
+    @Before
+    public void setUp() throws Exception {
+        goalkeepers = players(goalkeeper);
+        defenders = players(defender);
+        midfielders = players(midfielder);
+        forwards = players(forward);
+
+        Map<Position, List<Player>> players = new HashMap<Position, List<Player>>();
+        players.put(goalkeeper, goalkeepers);
+        players.put(defender, defenders);
+        players.put(midfielder, midfielders);
+        players.put(forward, forwards);
+        team = new Team(players);
+    }
+
+    @Test
+    public void retrievesGoalkeepers() throws Exception {
+        assertThat(team.goalkeepers(), is(goalkeepers));
+    }
+
+    @Test
+    public void retrievesDefenders() throws Exception {
+        assertThat(team.defenders(), is(defenders));
+    }
+
+    @Test
+    public void retrievesMidfielders() throws Exception {
+        assertThat(team.midfielders(), is(midfielders));
+    }
+
+    @Test
+    public void retrievesForwards() throws Exception {
+        assertThat(team.forwards(), is(forwards));
+    }
+
+    @Test
+    public void retrievesAllPlayers() throws Exception {
+        Collection<Player> allPlayers = goalkeepers;
+        allPlayers.addAll(defenders);
+        allPlayers.addAll(midfielders);
+        allPlayers.addAll(forwards);
+
+        assertThat(team.allPlayers(), is(allPlayers));
+    }
+
+    private List<Player> players(Position position) {
+        return newArrayList(new Player("", "", "", position, 80, 0.5, 9), new Player("", "", "", position, 80, 0.5, 9));
+    }
+}

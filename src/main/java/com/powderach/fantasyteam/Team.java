@@ -1,62 +1,66 @@
 package com.powderach.fantasyteam;
 
-import com.google.common.base.Function;
-import com.google.common.collect.Collections2;
 import com.mongodb.BasicDBObject;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import static com.google.common.collect.Lists.newArrayList;
 import static com.powderach.fantasyteam.Position.*;
 
 public class Team extends BasicDBObject {
-    private Map<Position, List<Player>> players;
 
     public Team(Map<Position, List<Player>> players) {
-        this.players = players;
         for (Position position : players.keySet()) {
-            this.put(position.display(), playerNamesFrom(players, position));
+            this.put(position.display(), players.get(position));
         }
     }
 
-    // Needed for Mongo
-    public Team() {}
+    public Team() {
+    }
 
     public List<Player> goalkeepers() {
-        return players.get(goalkeeper);
+        return (List<Player>) this.get(goalkeeper.display());
     }
 
     public List<Player> defenders() {
-        return players.get(defender);
+        return (List<Player>) this.get(defender.display());
     }
 
     public List<Player> midfielders() {
-        return players.get(midfielder);
+        return (List<Player>) this.get(midfielder.display());
     }
 
     public List<Player> forwards() {
-        return players.get(forward);
+        return (List<Player>) this.get(forward.display());
     }
 
     public Collection<Player> allPlayers() {
-        Collection<Player> superList = newArrayList();
-        for (List<Player> playerList : players.values()) {
-            superList.addAll(playerList);
-        }
+        Collection<Player> superList = goalkeepers();
+        superList.addAll(defenders());
+        superList.addAll(midfielders());
+        superList.addAll(forwards());
 
         return superList;
     }
 
-    private Collection<PlayerName> playerNamesFrom(Map<Position, List<Player>> players, Position position) {
-        Collection<PlayerName> names = Collections2.transform(players.get(position), new Function<Player, PlayerName>() {
-            @Override
-            public PlayerName apply(Player player) {
-                return player.name();
-            }
-        });
-        return names;
+    @Override
+    public int hashCode() {
+        return HashCodeBuilder.reflectionHashCode(this);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return EqualsBuilder.reflectionEquals(this, o);
+    }
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
 
 }
