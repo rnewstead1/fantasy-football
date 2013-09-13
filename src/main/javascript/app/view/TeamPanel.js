@@ -25,23 +25,15 @@ Ext.define('Team.view.TeamPanel', {
         this.width = 650;
         this.columns = [
             {
-                text     : 'Player',
+                text     : 'Player Name',
                 flex     : 1,
-                dataIndex: 'Forward.first_name'
-//            },
-//            {
-//                text     : 'Price',
-//                width    : 75,
-//                sortable : true,
-//                renderer : 'usMoney',
-//            },
-//            {
-//                text     : 'Change',
-//                width    : 80,
-//                sortable : true
+                dataIndex: 'player_name'
+            },
+            {
+                text     : 'Position',
+                dataIndex: 'position'
             }
         ];
-        debugger;
         this.callParent();
     }
 });

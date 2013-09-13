@@ -4,7 +4,7 @@ Ext.Loader.setConfig({
 
 Ext.application({
     name: 'Team',
-    models: ['Team'],
+    models: ['Player'],
     stores: ['TeamStore'],
     launch: function () {
         Ext.create('Team.view.FantasyTeamView');
