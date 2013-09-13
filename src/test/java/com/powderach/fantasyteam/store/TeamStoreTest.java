@@ -3,12 +3,9 @@ package com.powderach.fantasyteam.store;
 import com.powderach.fantasyteam.Player;
 import com.powderach.fantasyteam.Position;
 import com.powderach.fantasyteam.Team;
+import com.powderach.fantasyteam.TeamBuilder;
 import org.junit.Test;
 
-import java.util.List;
-import java.util.Map;
-
-import static com.google.common.collect.Maps.newHashMap;
 import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -16,20 +13,32 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class TeamStoreTest extends StoreTestBase {
 
     private TeamStore teamStore;
+    private Team team;
+    private Player player;
 
     @Override
     protected void additionalSetup() {
         teamStore = new TeamStore(collectionForTest);
+        player = new Player("George", "Best", "Man Utd", Position.defender, 70, 0.3, 7);
+        team = new TeamBuilder().with(asList(player)).build();
     }
 
     @Test
     public void storesTeam() throws Exception {
-        Map<Position, List<Player>> players = newHashMap();
-        players.put(Position.defender, asList(new Player("George", "Best", "Man Utd", Position.defender, 70, 0.3, 7)));
-        Team team = new Team(players);
-
         teamStore.store(team);
 
-        assertThat((Team) collectionForTest.find().next(), is(team));
+        Player player = (Player) collectionForTest.find().next();
+        Team actual = new TeamBuilder().with(asList(player)).build();
+
+        assertThat(actual, is(team));
+    }
+
+    @Test
+    public void retrievesTeam() throws Exception {
+        collectionForTest.insert(player);
+
+        Team actual = teamStore.retrieve();
+
+        assertThat(actual, is(team));
     }
 }

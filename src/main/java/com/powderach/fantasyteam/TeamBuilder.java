@@ -3,10 +3,11 @@ package com.powderach.fantasyteam;
 import java.util.List;
 import java.util.Map;
 
+import static com.google.common.collect.Maps.newHashMap;
 import static java.util.Arrays.asList;
 
 public class TeamBuilder {
-    private Map<Position, List<Player>> team;
+    private Map<Position, List<Player>> team = newHashMap();
 
     public Team build() {
         return new Team(team);

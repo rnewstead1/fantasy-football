@@ -8,10 +8,8 @@ import com.powderach.fantasyteam.store.PlayerStore;
 import com.powderach.fantasyteam.store.TeamStore;
 
 import java.util.List;
-import java.util.Map;
 
-import static com.google.common.collect.Maps.newHashMap;
-import static com.powderach.fantasyteam.Position.*;
+import static com.google.common.collect.Lists.newArrayList;
 import static com.powderach.fantasyteam.store.MongoClientConnector.collectionFor;
 import static java.util.Arrays.asList;
 
@@ -29,36 +27,27 @@ public class TeamRunner {
 //        System.out.println("Starting to collect data...");
 //        playerStore.getDataUpToPlayerNumber(532);
 //        System.out.println("Got data!");
-        Map<Position, List<Player>> players = newHashMap();
-        players.put(goalkeeper, asList(
+        List<Player> players = newArrayList();
+        players.addAll(asList(
                 playerStore.findPlayerBy(new PlayerName("Simon", "Mignolet")),
-                playerStore.findPlayerBy(new PlayerName("Kelvin", "Davis"))
-        ));
-
-        players.put(defender, asList(
+                playerStore.findPlayerBy(new PlayerName("Kelvin", "Davis")),
                 playerStore.findPlayerBy(new PlayerName("Per", "Mertesacker")),
                 playerStore.findPlayerBy(new PlayerName("Javier", "Garrido")),
                 playerStore.findPlayerBy(new PlayerName("Ashley", "Williams")),
                 playerStore.findPlayerBy(new PlayerName("Nathan", "Baker")),
-                playerStore.findPlayerBy(new PlayerName("Branislav", "Ivanovic"))
-        ));
-
-        players.put(midfielder, asList(
+                playerStore.findPlayerBy(new PlayerName("Branislav", "Ivanovic")),
                 playerStore.findPlayerBy(new PlayerName("Jack", "Colback")),
                 playerStore.findPlayerBy(new PlayerName("Eden", "Hazard")),
                 playerStore.findPlayerBy(new PlayerName("Gnegneri Yaya", "Touré")),
                 playerStore.findPlayerBy(new PlayerName("Emboaba", "Oscar")),
-                playerStore.findPlayerBy(new PlayerName("Christian", "Benteke"))
-        ));
-
-        players.put(forward, asList(
+                playerStore.findPlayerBy(new PlayerName("Christian", "Benteke")),
                 playerStore.findPlayerBy(new PlayerName("Robin", "van Persie")),
                 playerStore.findPlayerBy(new PlayerName("Kelvin", "Davis")),
                 playerStore.findPlayerBy(new PlayerName("Luke", "Moore"))
         ));
 
 
-        Team team = new Team(players);
+        Team team = new TeamBuilder().with(players).build();
         TeamStore teamStore = new TeamStore(collectionFor("playerdb", "team"));
         teamStore.store(team);
         return team;

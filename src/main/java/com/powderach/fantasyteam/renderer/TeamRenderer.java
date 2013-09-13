@@ -2,6 +2,7 @@ package com.powderach.fantasyteam.renderer;
 
 import com.powderach.fantasyteam.Player;
 import com.powderach.fantasyteam.PlayerCostCalculator;
+import com.powderach.fantasyteam.PlayerName;
 import com.powderach.fantasyteam.Team;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -22,7 +23,8 @@ public class TeamRenderer {
         JSONArray teamArray = new JSONArray();
         for (Player player : team.allPlayers()) {
             JSONObject playerObject = new JSONObject();
-            playerObject.put("player_name", player.name());
+            PlayerName playerName = player.name();
+            playerObject.put("player_name", playerName.firstName() + " " +  playerName.surname());
             playerObject.put("position", player.position());
             teamArray.add(playerObject);
         }

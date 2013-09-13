@@ -3,15 +3,13 @@ package com.powderach.fantasyteam;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static com.powderach.fantasyteam.Position.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.collection.IsEmptyCollection.empty;
 
 public class TeamTest {
 
@@ -65,6 +63,17 @@ public class TeamTest {
         allPlayers.addAll(forwards);
 
         assertThat(team.allPlayers(), is(allPlayers));
+    }
+
+    @Test
+    public void returnsEmptyListIfThereAreNoPlayers() throws Exception {
+        Team emptyTeam = new Team(Collections.<Position, List<Player>>emptyMap());
+
+        assertThat(emptyTeam.goalkeepers(), empty());
+        assertThat(emptyTeam.defenders(), empty());
+        assertThat(emptyTeam.midfielders(), empty());
+        assertThat(emptyTeam.forwards(), empty());
+        assertThat(emptyTeam.allPlayers(), empty());
     }
 
     private List<Player> players(Position position, String firstName, String otherPlayerFirstName) {
