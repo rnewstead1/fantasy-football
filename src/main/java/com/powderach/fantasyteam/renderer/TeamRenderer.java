@@ -20,6 +20,15 @@ public class TeamRenderer {
     public JSONObject renderToJson() {
         JSONObject teamObject = new JSONObject();
         JSONArray teamArray = new JSONArray();
+        for (Player player : team.allPlayers()) {
+            JSONObject playerObject = new JSONObject();
+            playerObject.put("player_name", player.name());
+            playerObject.put("position", player.position());
+            teamArray.add(playerObject);
+        }
+        JSONObject costObject = new JSONObject();
+        costObject.put("cost", teamCost());
+        teamArray.add(costObject);
         teamObject.put("team", teamArray);
         return teamObject;
     }
@@ -30,16 +39,19 @@ public class TeamRenderer {
         List<Player> defenders = team.defenders();
         List<Player> midfielders = team.midfielders();
         List<Player> forwards = team.forwards();
-        int cost = calculator.calculateCost(goalkeepers, defenders, midfielders, forwards);
 
         stringBuilder.append("TEAM\n");
         stringBuilder.append("Goalkeepers\n").append(render(goalkeepers)).append("\n");
         stringBuilder.append("Defenders\n").append(render(defenders)).append("\n");
         stringBuilder.append("Midfielders\n").append(render(midfielders)).append("\n");
         stringBuilder.append("Forwards\n").append(render(forwards)).append("\n");
-        stringBuilder.append("Cost: £").append(cost);
+        stringBuilder.append("Cost: £").append(teamCost());
 
         return stringBuilder.toString();
+    }
+
+    private int teamCost() {
+        return calculator.calculateCost(team.allPlayers());
     }
 
     private String render(List<Player> players) {

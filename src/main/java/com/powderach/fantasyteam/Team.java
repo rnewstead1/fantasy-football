@@ -6,10 +6,10 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import static com.google.common.collect.Lists.newArrayList;
 import static com.powderach.fantasyteam.Position.*;
 
 public class Team extends BasicDBObject {
@@ -39,8 +39,8 @@ public class Team extends BasicDBObject {
         return (List<Player>) this.get(forward.display());
     }
 
-    public Collection<Player> allPlayers() {
-        Collection<Player> superList = goalkeepers();
+    public List<Player> allPlayers() {
+        List<Player> superList = newArrayList(goalkeepers());
         superList.addAll(defenders());
         superList.addAll(midfielders());
         superList.addAll(forwards());

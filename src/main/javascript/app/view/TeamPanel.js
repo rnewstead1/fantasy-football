@@ -15,7 +15,7 @@ Ext.define('Team.view.TeamPanel', {
     multiSelect: true,
     stateId: 'stateGrid',
     height: 350,
-    title: 'Array Grid',
+    title: 'Team',
     viewConfig: {
         stripeRows: true,
         enableTextSelection: true
@@ -25,21 +25,20 @@ Ext.define('Team.view.TeamPanel', {
         this.width = 650;
         this.columns = [
             {
-                text     : 'Company',
+                text     : 'Player',
                 flex     : 1,
-                sortable : false,
-                dataIndex: 'Forward'
-            },
-            {
-                text     : 'Price',
-                width    : 75,
-                sortable : true,
-                renderer : 'usMoney',
-            },
-            {
-                text     : 'Change',
-                width    : 80,
-                sortable : true
+                dataIndex: 'Forward.first_name'
+//            },
+//            {
+//                text     : 'Price',
+//                width    : 75,
+//                sortable : true,
+//                renderer : 'usMoney',
+//            },
+//            {
+//                text     : 'Change',
+//                width    : 80,
+//                sortable : true
             }
         ];
         debugger;

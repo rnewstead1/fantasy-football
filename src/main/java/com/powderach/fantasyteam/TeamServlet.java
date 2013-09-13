@@ -1,6 +1,6 @@
 package com.powderach.fantasyteam;
 
-import com.mongodb.util.JSON;
+import com.powderach.fantasyteam.renderer.TeamRenderer;
 import com.powderach.fantasyteam.store.TeamStore;
 
 import javax.servlet.ServletException;
@@ -22,7 +22,9 @@ public class TeamServlet extends HttpServlet {
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             Team team = teamStore.retrieve();
-            String content = JSON.serialize(team);
+            TeamRenderer teamRenderer = new TeamRenderer(team, new PlayerCostCalculator());
+            String content = teamRenderer.renderToJson().toJSONString();
+//            String content = JSON.serialize(team);
             writeToResponse(response, content, 200);
         } catch (RuntimeException e) {
             writeToResponse(response, e.getMessage(), 400);
