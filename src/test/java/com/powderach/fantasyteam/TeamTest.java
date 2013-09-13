@@ -23,10 +23,10 @@ public class TeamTest {
 
     @Before
     public void setUp() throws Exception {
-        goalkeepers = players(goalkeeper);
-        defenders = players(defender);
-        midfielders = players(midfielder);
-        forwards = players(forward);
+        goalkeepers = players(goalkeeper, "A", "AA");
+        defenders = players(defender, "B", "BB");
+        midfielders = players(midfielder, "C", "CC");
+        forwards = players(forward, "D", "DD");
 
         Map<Position, List<Player>> players = new HashMap<Position, List<Player>>();
         players.put(goalkeeper, goalkeepers);
@@ -58,7 +58,8 @@ public class TeamTest {
 
     @Test
     public void retrievesAllPlayers() throws Exception {
-        Collection<Player> allPlayers = goalkeepers;
+        Collection<Player> allPlayers = newArrayList();
+        allPlayers.addAll(goalkeepers);
         allPlayers.addAll(defenders);
         allPlayers.addAll(midfielders);
         allPlayers.addAll(forwards);
@@ -66,7 +67,7 @@ public class TeamTest {
         assertThat(team.allPlayers(), is(allPlayers));
     }
 
-    private List<Player> players(Position position) {
-        return newArrayList(new Player("", "", "", position, 80, 0.5, 9), new Player("", "", "", position, 80, 0.5, 9));
+    private List<Player> players(Position position, String firstName, String otherPlayerFirstName) {
+        return newArrayList(new Player(firstName, "", "", position, 80, 0.5, 9), new Player(otherPlayerFirstName, "", "", position, 80, 0.5, 9));
     }
 }

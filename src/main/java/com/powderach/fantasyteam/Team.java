@@ -1,10 +1,7 @@
 package com.powderach.fantasyteam;
 
+import com.google.common.collect.Iterables;
 import com.mongodb.BasicDBObject;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.util.List;
 import java.util.Map;
@@ -40,27 +37,7 @@ public class Team extends BasicDBObject {
     }
 
     public List<Player> allPlayers() {
-        List<Player> superList = newArrayList(goalkeepers());
-        superList.addAll(defenders());
-        superList.addAll(midfielders());
-        superList.addAll(forwards());
-
-        return superList;
-    }
-
-    @Override
-    public int hashCode() {
-        return HashCodeBuilder.reflectionHashCode(this);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        return EqualsBuilder.reflectionEquals(this, o);
-    }
-
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
+        return newArrayList(Iterables.concat(goalkeepers(), defenders(), midfielders(), forwards()));
     }
 
 }
