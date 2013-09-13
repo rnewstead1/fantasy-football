@@ -32,6 +32,22 @@ Ext.define('Team.view.TeamPanel', {
             {
                 text     : 'Position',
                 dataIndex: 'position'
+            },
+            {
+                text     : 'Price',
+                dataIndex: 'price'
+            },
+            {
+                text     : 'Team',
+                dataIndex: 'team'
+            },
+            {
+                text     : 'Selected By',
+                dataIndex: 'selected_by'
+            },
+            {
+                text     : 'Points',
+                dataIndex: 'points'
             }
         ];
         this.callParent();

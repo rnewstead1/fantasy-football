@@ -37,8 +37,20 @@ public class Player extends BasicDBObject {
         return new PlayerName(String.valueOf(get(FIRST_NAME)), String.valueOf(get(SURNAME)));
     }
 
+    public String team() {
+        return String.valueOf(get(TEAM));
+    }
+
     public Long totalPoints() {
         return Long.parseLong(String.valueOf(get(POINTS)));
+    }
+
+    public Long cost() {
+        return Long.parseLong(String.valueOf(get(COST)));
+    }
+
+    public Double selectedBy() {
+        return Double.parseDouble(String.valueOf(get(SELECTED_BY)));
     }
 
     @Override

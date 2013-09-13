@@ -25,7 +25,7 @@ public class TeamRendererTest {
     public void rendersToJson() throws Exception {
         JSONObject jsonObject = teamRenderer.renderToJson();
 
-        assertThat(jsonObject, is(expected()));
+        assertThat(jsonObject.toJSONString(), is(expected().toJSONString()));
     }
 
     private JSONObject expected() {
@@ -34,6 +34,10 @@ public class TeamRendererTest {
         JSONObject player = new JSONObject();
         player.put("player_name", "David James");
         player.put("position", goalkeeper.display());
+        player.put("price", 5);
+        player.put("selected_by", 7.5);
+        player.put("points", 6);
+        player.put("team", "");
         teamArray.add(player);
         JSONObject cost = new JSONObject();
         cost.put("cost", 5);

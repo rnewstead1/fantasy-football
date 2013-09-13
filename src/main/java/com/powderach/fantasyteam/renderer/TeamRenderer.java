@@ -26,6 +26,10 @@ public class TeamRenderer {
             PlayerName playerName = player.name();
             playerObject.put("player_name", playerName.firstName() + " " +  playerName.surname());
             playerObject.put("position", player.position().display());
+            playerObject.put("points", player.totalPoints());
+            playerObject.put("selected_by", player.selectedBy());
+            playerObject.put("price", player.cost());
+            playerObject.put("team", player.team());
             teamArray.add(playerObject);
         }
         JSONObject costObject = new JSONObject();
@@ -60,17 +64,18 @@ public class TeamRenderer {
         StringBuilder stringBuilder = new StringBuilder();
 
         for (Player player : players) {
+            PlayerName playerName = player.name();
             stringBuilder
-                    .append(player.get("first_name"))
+                    .append(playerName.firstName())
                     .append(" ")
-                    .append(player.get("surname"))
+                    .append(playerName.surname())
                     .append(" ")
-                    .append(player.get("team"))
+                    .append(player.team())
                     .append(" ")
                     .append("£")
-                    .append(player.get("cost"))
+                    .append(player.cost())
                     .append(" ")
-                    .append(player.get("selected_by"))
+                    .append(player.selectedBy())
                     .append("\n");
         }
         return stringBuilder.toString();
