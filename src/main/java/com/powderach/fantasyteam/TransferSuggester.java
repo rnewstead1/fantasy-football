@@ -1,16 +1,18 @@
 package com.powderach.fantasyteam;
 
-import java.util.Collections;
+import com.powderach.fantasyteam.store.PlayerSelector;
+
 import java.util.List;
 
 public class TransferSuggester {
-    public List<Transfer> suggestFor(List<Player> currentPlayers) {
-        Collections.sort(currentPlayers, new PlayerValueComparator());
+    private final PlayerSelector playerSelector;
 
-        //get the two players with the lowest points, then lookup players
-        // of the same position for the same or less price who have more points
+    public TransferSuggester(PlayerSelector playerSelector) {
+        this.playerSelector = playerSelector;
+    }
 
-        return null;
+    public List<Player> suggestFor(Player currentPlayer) {
+        return playerSelector.playersOfTheSamePositionAs(currentPlayer);
     }
 
 }

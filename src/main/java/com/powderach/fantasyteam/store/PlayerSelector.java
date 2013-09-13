@@ -67,6 +67,10 @@ public class PlayerSelector {
         );
     }
 
+    public List<Player> playersOfTheSamePositionAs(Player currentPlayer) {
+        return null;
+    }
+
     private static class PlayerCostComparator implements Comparator<Player> {
         @Override
         public int compare(Player player1, Player player2) {
