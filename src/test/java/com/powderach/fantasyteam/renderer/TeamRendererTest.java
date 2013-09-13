@@ -33,7 +33,7 @@ public class TeamRendererTest {
         JSONArray teamArray = new JSONArray();
         JSONObject player = new JSONObject();
         player.put("player_name", "David James");
-        player.put("position", goalkeeper);
+        player.put("position", goalkeeper.display());
         teamArray.add(player);
         JSONObject cost = new JSONObject();
         cost.put("cost", 5);

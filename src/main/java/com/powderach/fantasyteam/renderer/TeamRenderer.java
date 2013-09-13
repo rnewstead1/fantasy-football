@@ -25,7 +25,7 @@ public class TeamRenderer {
             JSONObject playerObject = new JSONObject();
             PlayerName playerName = player.name();
             playerObject.put("player_name", playerName.firstName() + " " +  playerName.surname());
-            playerObject.put("position", player.position());
+            playerObject.put("position", player.position().display());
             teamArray.add(playerObject);
         }
         JSONObject costObject = new JSONObject();

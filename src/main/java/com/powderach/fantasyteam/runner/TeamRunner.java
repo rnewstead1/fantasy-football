@@ -7,11 +7,7 @@ import com.powderach.fantasyteam.store.PlayerSelector;
 import com.powderach.fantasyteam.store.PlayerStore;
 import com.powderach.fantasyteam.store.TeamStore;
 
-import java.util.List;
-
-import static com.google.common.collect.Lists.newArrayList;
 import static com.powderach.fantasyteam.store.MongoClientConnector.collectionFor;
-import static java.util.Arrays.asList;
 
 public class TeamRunner {
     public static void main(String[] args) {
@@ -24,33 +20,32 @@ public class TeamRunner {
 
     private static Team manuallyStoreTeam() {
         PlayerStore playerStore = new PlayerStore(collectionFor("playerdb", "player"), new JsonReader(), new JsonToPlayerFactory());
-//        System.out.println("Starting to collect data...");
-//        playerStore.getDataUpToPlayerNumber(532);
-//        System.out.println("Got data!");
-        List<Player> players = newArrayList();
-        players.addAll(asList(
-                playerStore.findPlayerBy(new PlayerName("Simon", "Mignolet")),
-                playerStore.findPlayerBy(new PlayerName("Kelvin", "Davis")),
-                playerStore.findPlayerBy(new PlayerName("Per", "Mertesacker")),
-                playerStore.findPlayerBy(new PlayerName("Javier", "Garrido")),
-                playerStore.findPlayerBy(new PlayerName("Ashley", "Williams")),
-                playerStore.findPlayerBy(new PlayerName("Nathan", "Baker")),
-                playerStore.findPlayerBy(new PlayerName("Branislav", "Ivanovic")),
-                playerStore.findPlayerBy(new PlayerName("Jack", "Colback")),
-                playerStore.findPlayerBy(new PlayerName("Eden", "Hazard")),
-                playerStore.findPlayerBy(new PlayerName("Gnegneri Yaya", "Touré")),
-                playerStore.findPlayerBy(new PlayerName("Emboaba", "Oscar")),
-                playerStore.findPlayerBy(new PlayerName("Christian", "Benteke")),
-                playerStore.findPlayerBy(new PlayerName("Robin", "van Persie")),
-                playerStore.findPlayerBy(new PlayerName("Kelvin", "Davis")),
-                playerStore.findPlayerBy(new PlayerName("Luke", "Moore"))
-        ));
+//        getLatestData(playerStore);
 
+        TeamBuilder teamBuilder = new TeamBuilder();
+        teamBuilder.with(playerStore.findPlayerBy(new PlayerName("Simon", "Mignolet")));
+        teamBuilder.with(playerStore.findPlayerBy(new PlayerName("Kelvin", "Davis")));
+        teamBuilder.with(playerStore.findPlayerBy(new PlayerName("Per", "Mertesacker")));
+        teamBuilder.with(playerStore.findPlayerBy(new PlayerName("Javier", "Garrido")));
+        teamBuilder.with(playerStore.findPlayerBy(new PlayerName("Ashley", "Williams")));
+        teamBuilder.with(playerStore.findPlayerBy(new PlayerName("Nathan", "Baker")));
+        teamBuilder.with(playerStore.findPlayerBy(new PlayerName("Branislav", "Ivanovic")));
+        teamBuilder.with(playerStore.findPlayerBy(new PlayerName("Jack", "Colback")));
+        teamBuilder.with(playerStore.findPlayerBy(new PlayerName("Eden", "Hazard")));
+        teamBuilder.with(playerStore.findPlayerBy(new PlayerName("Gnegneri Yaya", "Touré")));
+        teamBuilder.with(playerStore.findPlayerBy(new PlayerName("Emboaba", "Oscar")));
+        teamBuilder.with(playerStore.findPlayerBy(new PlayerName("Christian", "Benteke")));
+        teamBuilder.with(playerStore.findPlayerBy(new PlayerName("Robin", "van Persie")));
+        teamBuilder.with(playerStore.findPlayerBy(new PlayerName("Luke", "Moore")));
+        Team team = teamBuilder.build();
 
-        Team team = new TeamBuilder().with(players).build();
         TeamStore teamStore = new TeamStore(collectionFor("playerdb", "team"));
         teamStore.store(team);
         return team;
+    }
+
+    private static void getLatestData(PlayerStore playerStore) {
+        playerStore.getDataUpToPlayerNumber(532);
     }
 
     private static Team createTeam() {
