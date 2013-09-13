@@ -19,7 +19,7 @@ public class PlayerSelector {
     }
 
     public Player cheapest(Position position) {
-        return playerSelection.select(new BasicDBObject("position", position.display()), new BasicDBObject("cost", 1));
+        return playerSelection.first(queryFor(position), new BasicDBObject("cost", 1));
     }
 
     public List<Player> mostSelectedDefenders(int numberToSelect) {
@@ -61,14 +61,20 @@ public class PlayerSelector {
 
     private List<Player> mostSelected(Position position, int numberToReturn) {
         return playerSelection.select(
-                new BasicDBObject("position", position.display()),
+                queryFor(position),
                 numberToReturn,
                 new BasicDBObject("selected_by", -1)
         );
     }
 
     public List<Player> playersOfTheSamePositionAs(Player currentPlayer) {
-        return null;
+        List<Player> allPlayers = playerSelection.all(queryFor(currentPlayer.position()));
+        allPlayers.remove(currentPlayer);
+        return allPlayers;
+    }
+
+    private BasicDBObject queryFor(Position position) {
+        return new BasicDBObject("position", position.display());
     }
 
     private static class PlayerCostComparator implements Comparator<Player> {

@@ -16,13 +16,12 @@ public class TransferSuggester {
     }
 
     public Collection<Player> suggestFor(final Player currentPlayer) {
-        final Long currentPlayerCost = currentPlayer.cost();
 
         List<Player> playersOfTheSamePosition = playerSelector.playersOfTheSamePositionAs(currentPlayer);
         return filter(playersOfTheSamePosition, new Predicate<Player>() {
             @Override
             public boolean apply(Player player) {
-                return player.cost() <= currentPlayerCost;
+                return player.cost() <= currentPlayer.cost() && player.totalPoints() > currentPlayer.totalPoints();
             }
         });
     }

@@ -25,12 +25,12 @@ public class TransferSuggesterTest {
     public void setUp() throws Exception {
         playerSelector = mock(PlayerSelector.class);
         transferSuggester = new TransferSuggester(playerSelector);
-        currentPlayer = new Player("Simon", "Mignolet", "Liverpool", goalkeeper, 50, 0.5, 6);
+        currentPlayer = new Player("Simon", "Mignolet", "Liverpool", goalkeeper, 50, 0.5, 160);
     }
 
     @Test
-    public void suggestsTransfers() throws Exception {
-        Player suggestedPlayer = new Player("Luke", "Moore", "Swansea", goalkeeper, 50, 0.5, 6);
+    public void suggestsTransferOfPlayerOfSamePriceAndMorePoints() throws Exception {
+        Player suggestedPlayer = new Player("Luke", "Moore", "Swansea", goalkeeper, 50, 0.5, 170);
         when(playerSelector.playersOfTheSamePositionAs(currentPlayer)).thenReturn(asList(suggestedPlayer));
 
         Collection<Player> transfers = transferSuggester.suggestFor(currentPlayer);
@@ -40,11 +40,21 @@ public class TransferSuggesterTest {
 
     @Test
     public void doesNotSuggestMoreExpensivePlayers() throws Exception {
-        Player moreExpensivePlayer = new Player("Luke", "Moore", "Swansea", goalkeeper, 70, 0.5, 6);
+        Player moreExpensivePlayer = new Player("Luke", "Moore", "Swansea", goalkeeper, 70, 0.5, 160);
         when(playerSelector.playersOfTheSamePositionAs(currentPlayer)).thenReturn(asList(moreExpensivePlayer));
 
         Collection<Player> transfers = transferSuggester.suggestFor(currentPlayer);
 
         assertThat(transfers, not(hasItem(moreExpensivePlayer)));
+    }
+
+    @Test
+    public void doesNotSuggestPlayerWithLessPoints() throws Exception {
+        Player playerWithLessPoints = new Player("Luke", "Moore", "Swansea", goalkeeper, 50, 0.5, 60);
+        when(playerSelector.playersOfTheSamePositionAs(currentPlayer)).thenReturn(asList(playerWithLessPoints));
+
+        Collection<Player> transfers = transferSuggester.suggestFor(currentPlayer);
+
+        assertThat(transfers, not(hasItem(playerWithLessPoints)));
     }
 }
