@@ -18,6 +18,7 @@ public class TransferSuggester {
     public Collection<Player> suggestFor(final Player currentPlayer) {
 
         List<Player> playersOfTheSamePosition = playerSelector.playersOfTheSamePositionAs(currentPlayer);
+        // Might make more sense for this logic to be in the PlayerSelector??
         return filter(playersOfTheSamePosition, new Predicate<Player>() {
             @Override
             public boolean apply(Player player) {

@@ -10,15 +10,16 @@ Ext.define('Team.view.TeamPanel', {
     itemId: 'teamPanel',
     xtype: 'array-grid',
     store: 'TeamStore',
-    stateful: true,
-    collapsible: true,
-    multiSelect: true,
     stateId: 'stateGrid',
     height: 350,
     title: 'Team',
     viewConfig: {
         stripeRows: true,
         enableTextSelection: true
+    },
+    selModel: {
+        selType: 'checkboxmodel',
+        checkOnly: true
     },
 
     initComponent: function () {
