@@ -11,8 +11,11 @@ import static com.powderach.fantasyteam.store.MongoClientConnector.collectionFor
 
 public class TeamRunner {
     public static void main(String[] args) {
-        Team team = manuallyStoreTeam();
-//        Team team = createTeam(teamRunner);
+        DBCollection dbCollection = collectionFor("playerdb", "player");
+        PlayerStore playerStore = new PlayerStore(dbCollection, new JsonReader(), new JsonToPlayerFactory());
+        getLatestData(playerStore);
+//        Team team = manuallyStoreTeam();
+        Team team = createTeam(dbCollection);
 
         String rendered = new TeamRenderer(team, new PlayerCostCalculator()).renderToString();
         System.out.println(rendered);
@@ -48,10 +51,9 @@ public class TeamRunner {
         playerStore.getDataUpToPlayerNumber(532);
     }
 
-    private static Team createTeam() {
-        DBCollection playerCollection = collectionFor("playerdb", "player");
+    private static Team createTeam(DBCollection playerCollection) {
         PlayerSelector playerSelector = new PlayerSelector(playerCollection);
-        TeamSelector teamSelector = new TeamSelector(playerSelector, null);
+        TeamSelector teamSelector = new TeamSelector(playerSelector, new TeamStore(collectionFor("playerdb", "team")));
         return teamSelector.selectAndStore();
     }
 
